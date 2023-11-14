@@ -22,6 +22,7 @@ _build:
 
 # Change to separate build and than up?
 	docker compose up -d --build
+	docker compose exec php bin/console doctrine:migrations:migrate
 
 # docker compose exec php /bin/bash | symfony check:requirements
 
