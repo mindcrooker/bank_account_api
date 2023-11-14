@@ -10,3 +10,6 @@ For simplicity the database in `/app/.env` file is set to:
 ```
 DATABASE_URL="mysql://root:secret@database:3306/bank_account_api?serverVersion=8.0"
 ```
+
+Available endpoints:
+```/create_wallet``` - POST
