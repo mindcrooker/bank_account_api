@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Transaction;
 use App\Entity\Wallet;
 use App\Repository\WalletRepository;
 use DateTime;
@@ -76,6 +77,9 @@ class ApiController extends AbstractController
         $wallet->setBalance($wallet->getBalance() + $amount);
         $wallet->setLastUpdated(new \DateTime());
 
+        $transaction = new Transaction($wallet, $amount);        
+        $entityManager->persist($transaction);
+
         $entityManager->flush();
 
         return $this->json($amount . ' deposited to wallet with id '.$wallet->getId(), Response::HTTP_OK);
@@ -109,6 +113,9 @@ class ApiController extends AbstractController
 
         $wallet->setBalance($wallet->getBalance() - $amount);
         $wallet->setLastUpdated(new \DateTime());
+
+        $transaction = new Transaction($wallet, -$amount);        
+        $entityManager->persist($transaction);
 
         $entityManager->flush();
 
