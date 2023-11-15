@@ -3,27 +3,26 @@ default: help
 help:
 	@echo ""
 	@echo "Available environment commands:"
-	@echo "    start    			bring up the development environment"
+	@echo "    start    			pull images, rebuild and bring up the development environment"
 	@echo "    stop     			stop the development environment and clear up containers and network"
-	@echo ""
+	@echo "	   fast 				bring up the without forcing to pull images"
 
 
 
 # Development Environment Commands
-start: _build
+start: _build 
+
+_build:
+	docker-compose build --pull --no-cache
+	docker compose up -d
 
 stop:
 	docker-compose down -v --remove-orphans
 	docker network prune -f
 
-_build:
-#	docker-compose pull
-#	docker-compose build --pull --no-cache
+fast:
+	docker compose up-d --build
 
-# Change to separate build and than up?
-	docker compose up -d --build
+# Run migrations
+migrate:
 	docker compose exec php bin/console doctrine:migrations:migrate
-
-# docker compose exec php /bin/bash | symfony check:requirements
-
-# add some commands to run migrations
