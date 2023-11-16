@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -12,6 +13,7 @@ class Transaction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['transactions_log'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'transaction')]
@@ -19,16 +21,18 @@ class Transaction
     private ?Wallet $wallet = null;
 
     #[ORM\Column]
+    #[Groups(['transactions_log'])]
     private ?float $amount = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['transactions_log'])]
     private ?\DateTimeInterface $transaction_date = null;
 
     public function __construct(?Wallet $wallet, ?int $amount)
     {
-        $this->wallet = $wallet;
-        $this->amount = $amount;
-        $this->transaction_date = new \DateTime();
+        $this->setWallet($wallet);
+        $this->setAmount($amount);
+        $this->setTransactionDate(new \DateTime());
     }
 
     public function getId(): ?int

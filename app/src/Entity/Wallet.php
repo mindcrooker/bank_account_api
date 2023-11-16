@@ -23,11 +23,11 @@ class Wallet
     private ?\DateTimeInterface $last_updated = null;
 
     #[ORM\OneToMany(mappedBy: 'wallet', targetEntity: Transaction::class)]
-    private Collection $transaction;
+    private Collection $transactions;
 
     public function __construct()
     {
-        $this->transaction = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,15 +62,15 @@ class Wallet
     /**
      * @return Collection<int, Transaction>
      */
-    public function getTransaction(): Collection
+    public function getTransactions(): Collection
     {
-        return $this->transaction;
+        return $this->transactions;
     }
 
     public function addTransaction(Transaction $transaction): static
     {
-        if (!$this->transaction->contains($transaction)) {
-            $this->transaction->add($transaction);
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions->add($transaction);
             $transaction->setWallet($this);
         }
 
@@ -79,7 +79,7 @@ class Wallet
 
     public function removeTransaction(Transaction $transaction): static
     {
-        if ($this->transaction->removeElement($transaction)) {
+        if ($this->transactions->removeElement($transaction)) {
             // set the owning side to null (unless already changed)
             if ($transaction->getWallet() === $this) {
                 $transaction->setWallet(null);
