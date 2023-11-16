@@ -6,7 +6,8 @@ help:
 	@echo "    start    			pull images, rebuild and bring up the development environment"
 	@echo "    stop     			stop the development environment and clear up containers and network"
 	@echo "	   fast 				bring up the without forcing to pull images"
-
+	@echo "	   migrate 				run migrations"
+	@echo ""
 
 
 # Development Environment Commands

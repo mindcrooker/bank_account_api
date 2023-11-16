@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ApiController!{% endblock %}
+{% block title %}Hello Bank Account API!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,23 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Welcome to Bank Account API! ✅</h1>
 
-    This friendly message is coming from:
+    Here are available enpoints:
     <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/bank_account_api/src/Controller/ApiController.php'|file_link(0) }}">src/Controller/ApiController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/bank_account_api/templates/api/index.html.twig'|file_link(0) }}">templates/api/index.html.twig</a></code></li>
+        <li> POST <code>/create_wallet</code> - Create new wallet </li>
+        <li>GET <code>/check_balance/{id}</code> - Check balance of the wallet with <code>`{id}`</code></li>
+        <li>POST <code>/deposit/{id}</code> - Deposit funds to wallet with given <code>`{id}`</code></li>
+        <li>POST <code>/withdraw/{id}</code> - Withdraw funds from wallet with given <code>`{id}`</code></li>
     </ul>
+
+    To deposit or withdraw funds from wallet using <code>`/deposit/{id}`</code> and <code>`/withdraw/{id}`</code> endpoints, specify the <code>amount</code> in request body, using JSON:<br>
+<code>
+{"amount": 10}
+</code>
+<br><br>
+To generate a log of transactions for a wallet with <code>{id}</code>, use this command from within php container:
+<code>symfony console api:generate-wallet-transactions-log {id}</code> <br>
+or use the alias: <code>symfony console api:gwtl {id}</code>
 </div>
 {% endblock %}
